@@ -2,6 +2,7 @@ require('dotenv').config()
 
 
 const Discord=require('discord.js')
+const request=require('request')
 const client=new Discord.Client({
     partials:['MESSAGE']
 })
@@ -20,15 +21,38 @@ const DANCE_COMMAND='dance'
 const PUNCH_COMMAND='punch'
 const SLAP_COMMAND='slap'
 const LAUGH_COMMAND='laugh'
+const WEATHER_COMMAND='weather'
+
+
 
 client.on('message',msg=>{
+    // changing the role
     if(msg.content === `${BOT_PREFIX}${MOD_ME_COMMAND}`){
        modUser(msg.member)
     }
+    // Hello Greeting
     if(msg.content === `${BOT_PREFIX}${WELCOME_COMMAND}`){
         welcomeUser(msg)
     }
+    //Weather 
+    if(msg.content.includes(`${BOT_PREFIX}${WEATHER_COMMAND}`) && msg.author.bot==false)
+    {
+        let cityname=msg.content.split(" ")[1]
+        if(cityname ===undefined){
+            msg.channel.send("Invalid city name.Please follow the format: !weather <######>")
+        }
+        else{
+            getWeather(cityname)
+            .then(data=>{
+                // console.log(data.weather);
+                msg.channel.send(data.weather[0].description)
+            })
+           
+        }
+    }
 
+
+    // get insipirational quote
     if(msg.content === `${BOT_PREFIX}${MOTIVATE_ME_COMMAND}`){
         getMotivationalQuote()
         .then(quote=>{
@@ -60,12 +84,23 @@ client.on('message',msg=>{
         })
     }
 
-
-
-
-
-   
 })
+
+
+function getWeather(cityname){
+    let api_key='dedf755fef35c5e383ce219dcb1a5d8c'
+    return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${api_key}`
+    )
+    .then(res =>{
+        return res.json()
+    })
+    .then(data =>{
+        return data
+    })
+
+    
+}
+
 
 function getMotivationalQuote(){
     return fetch("https://zenquotes.io/api/random")
