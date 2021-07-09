@@ -12,7 +12,7 @@ client.on('ready',()=>{
     console.log("Our bot is ready to go!!!");
 })
 
-const BOT_PREFIX='pyarelal_'
+const BOT_PREFIX='!'
 const MOD_ME_COMMAND='mod-me'
 const WELCOME_COMMAND='hello'
 const MOTIVATE_ME_COMMAND='inspire'
