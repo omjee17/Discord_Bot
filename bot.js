@@ -39,15 +39,16 @@ client.on('message',msg=>{
     {
         let cityname=msg.content.split(" ")[1]
         if(cityname ===undefined){
-            msg.channel.send("Invalid city name.Please follow the format: !weather <######>")
+            msg.channel.send("Invalid city name.Please follow the format: !weather <cityname>")
         }
         else{
             getWeather(cityname)
             .then(data=>{
-                // console.log(data.weather);
                 msg.channel.send(data.weather[0].description)
             })
-           
+            .catch(err=>{
+                msg.channel.send("Invalid city name.Please follow the format: !weather <cityname>")
+            })
         }
     }
 
@@ -89,7 +90,7 @@ client.on('message',msg=>{
 
 function getWeather(cityname){
     let api_key='dedf755fef35c5e383ce219dcb1a5d8c'
-    return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${api_key}`
+    return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${process.env.api_key}`
     )
     .then(res =>{
         return res.json()
@@ -97,6 +98,7 @@ function getWeather(cityname){
     .then(data =>{
         return data
     })
+    
 
     
 }

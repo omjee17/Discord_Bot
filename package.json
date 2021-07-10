@@ -7,7 +7,7 @@
     "start": "node bot.js",
     "devStart": "nodemon bot.js"
   },
-  "author": "Abhishek Kumar Singh <shobhitsingh510@gmail.com> (http://realmelon.com)",
+  "author": "Omjee",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
