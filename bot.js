@@ -89,7 +89,6 @@ client.on('message',msg=>{
 
 
 function getWeather(cityname){
-    let api_key='dedf755fef35c5e383ce219dcb1a5d8c'
     return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${process.env.api_key}`
     )
     .then(res =>{
